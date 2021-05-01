@@ -612,6 +612,7 @@ select_next_item <- function(item_bank, opt) {
 administer_next_item <- function(item_bank, show_item) {
   c(
     psychTestR::code_block(fun = function(state, ...) {
+      message("administer_next_item check point 1")
       test_state <- psychTestR::get_local("test_state", state)
       item_id <- test_state$next_item$item
       stopifnot(is.scalar.numeric(item_id),
@@ -619,10 +620,12 @@ administer_next_item <- function(item_bank, show_item) {
       item <- new_item(df = item_bank[item_id, ],
                        item_number = get_num_items_administered(test_state) + 1L,
                        num_items_in_test = get_num_items_in_test(test_state))
+      message("administer_next_item check point 2")
       psychTestR::set_local("item", item, state)
     }),
     if (is.function(show_item)) {
       psychTestR::reactive_page(function(state, ...) {
+        message("administer_next_item check point 3")
         item <- psychTestR::get_local("item", state)
         show_item(item, state, ...)
       })
