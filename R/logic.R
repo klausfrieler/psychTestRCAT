@@ -628,6 +628,7 @@ administer_next_item <- function(item_bank, show_item) {
       psychTestR::reactive_page(function(state, ...) {
         message("administer_next_item check point 3")
         item <- psychTestR::get_local("item", state)
+        message("administer_next_item check point 3b")
         show_item(item, state, ...)
       })
     } else {
