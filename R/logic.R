@@ -490,12 +490,14 @@ check_inputs <- function(label, item_bank, show_item, opt) {
 
 setup <- function(label, stopping_rule, opt, item_bank) {
   psychTestR::code_block(function(state, ...) {
+    message("psychTestRCAT setup checkpoint 1")
     num_items_in_test <- get_num_items_in_test(stopping_rule)
     test_state <- new_state(num_items_in_test = num_items_in_test,
                             constrain_answers = opt$constrain_answers,
                             item_bank = item_bank)
     psychTestR::set_local(key = "test_state", value = test_state, state = state)
     psychTestR::register_next_results_section(state, label)
+    message("psychTestRCAT setup checkpoint 2")
   })
 }
 
@@ -565,6 +567,7 @@ are_duplicates_avoided <- function(test_state, item_bank, opt) {
 select_next_item <- function(item_bank, opt) {
   psychTestR::code_block(
     function(state, ...) {
+      message("psychTestRCAT select_next_item checkpoint 1")
       test_state <- psychTestR::get_local("test_state", state)
       ability_estimate <- get_current_ability_estimate(
         test_state, opt = opt, estimator = opt$next_item.estimator)
@@ -582,6 +585,7 @@ select_next_item <- function(item_bank, opt) {
         cbControl = opt$cb_control,
         cbGroup = opt$cb_group
       ), error = function(e) NULL)
+      message("psychTestRCAT select_next_item checkpoint 2")
 
       test_state$next_item <- next_item
       if (is.null(next_item) ||
@@ -599,6 +603,8 @@ select_next_item <- function(item_bank, opt) {
                                              nsmall = 3)))
         shiny::showNotification(msg, duration = opt$notify_duration)
       }
+      message("psychTestRCAT select_next_item checkpoint 3")
+
       psychTestR::set_local(key = "test_state", value = test_state, state = state)
     })
 }
