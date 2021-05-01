@@ -625,6 +625,7 @@ administer_next_item <- function(item_bank, show_item) {
       message(sprintf("administer_next_item check point 2b, type show_item: %s", class(show_item)))
     }),
     if (is.function(show_item)) {
+      message(sprintf("administer_next_item check point 2c, type show_item: %s", class(show_item)))
       psychTestR::reactive_page(function(state, ...) {
         message("administer_next_item check point 3")
         item <- psychTestR::get_local("item", state)
